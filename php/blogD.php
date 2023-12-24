@@ -242,9 +242,7 @@ include("conexion.php");
                     
                     
                     
-                    ?>
-                       
-                      
+                    ?>  
                        
                        <div class="col-12">
                             <nav aria-label="Page navigation">

@@ -1,6 +1,6 @@
 
 <?php 
-
+   session_name("LOGIN");
    session_start();
    if (!isset($_SESSION['correo']) && $_SESSION['correo'] === true) {
       

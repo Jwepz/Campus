@@ -1,6 +1,6 @@
 <?php
-    // ini_set('display_errors',1);
-    // error_reporting(E_ALL);
+    ini_set('display_errors',1);
+    error_reporting(E_ALL);
        /*conexion a la base de datos */
     class Conexion{
 
@@ -31,6 +31,48 @@
             return $sentencia->fetchAll();
 
         }
+
+        public function limpiar_cadena($sql){
+            $sql=trim($sql);
+            $sql=stripslashes($sql);
+            $sql=str_ireplace("<script>", "", $sql);
+            $sql=str_ireplace("</script>", "", $sql);
+            $sql=str_ireplace("<script src", "", $sql);
+            $sql=str_ireplace("<script type=", "", $sql);
+            $sql=str_ireplace("SELECT * FROM", "", $sql);
+            $sql=str_ireplace("DELETE FROM", "", $sql);
+            $sql=str_ireplace("INSERT INTO", "", $sql);
+            $sql=str_ireplace("DROP TABLE", "", $sql);
+            $sql=str_ireplace("DROP DATABASE", "", $sql);
+            $sql=str_ireplace("TRUNCATE TABLE", "", $sql);
+            $sql=str_ireplace("SHOW TABLES;", "", $sql);
+            $sql=str_ireplace("SHOW DATABASES;", "", $sql);
+            $sql=str_ireplace("<?php", "", $sql);
+            $sql=str_ireplace("?>", "", $sql);
+            $sql=str_ireplace("--", "", $sql);
+            $sql=str_ireplace("^", "", $sql);
+            $sql=str_ireplace("<", "", $sql);
+            $sql=str_ireplace("[", "", $sql);
+            $sql=str_ireplace("]", "", $sql);
+            $sql=str_ireplace("==", "", $sql);
+            $sql=str_ireplace(";", "", $sql);
+            $sql=str_ireplace("::", "", $sql);
+            $sql=trim($sql);
+            $sql=stripslashes($sql);
+            return $sql;
+        }
     }
+
+    function renombrar_fotos($nombre){
+		$nombre=str_ireplace(" ", "_", $nombre);
+		$nombre=str_ireplace("/", "_", $nombre);
+		$nombre=str_ireplace("#", "_", $nombre);
+		$nombre=str_ireplace("-", "_", $nombre);
+		$nombre=str_ireplace("$", "_", $nombre);
+		$nombre=str_ireplace(".", "_", $nombre);
+		$nombre=str_ireplace(",", "_", $nombre);
+		$nombre=$nombre."_".rand(0,100);
+		return $nombre;
+	}
 
 ?>
