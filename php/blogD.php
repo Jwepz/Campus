@@ -170,29 +170,32 @@ include("conexion.php");
                     <?php 
 
                           
-                           $contador = 0;
-                         if (!isset($_GET['pag'])) {
+                        $contador = 0;
+                        if (!isset($_GET['pag'])) {
                           $pag = 1;
-                      } else {
-                          $pag = $_GET['pag'];
-                      }   
-                         $startIndex = ($pag - 1) * 4;
-                          $endIndex = $startIndex + 3;
+                        } else {
+                          $pag = (int)$_GET['pag'];
+                        }   
 
-                          $blog = "SELECT * FROM blog ORDER BY codigo DESC";
-                          $Blog = $objConexion->consultar($blog);
+                        $pag = max(1, $pag);
+
+                        $startIndex = ($pag -1) * 4;
+                        $endIndex = $startIndex + 3;
+
+                        $blog = "SELECT * FROM blog ORDER BY codigo DESC";
+                        $Blog = $objConexion->consultar($blog);
                           
                            
-                           foreach ($Blog as $blog) {
+                        foreach ($Blog as $blog) {
 
-                                if ($contador < $startIndex) {
+                            if ($contador < $startIndex) {
                                 $contador++;
                                 continue;
                             }
                                    
-                                $imagenRuta = 'imagenes/';
-                                $imagen = $imagenRuta . $blog['imagen'];
-                                ?> 
+                        $imagenRuta = 'imagenes/';
+                        $imagen = $imagenRuta . $blog['imagen'];
+                        ?> 
                     
                         <div class="col-md-6 mb-4 pb-2">
 
@@ -231,7 +234,7 @@ include("conexion.php");
                         </div>
                         <?php $contador++;
                                 if ($contador > $endIndex) {
-                                    break; // Stop the loop after 4 items have been displayed
+                                    break; 
                                 }
                     }
                     $sqlTotalComunicados = "SELECT COUNT(*) AS total FROM blog";
@@ -248,13 +251,24 @@ include("conexion.php");
                             <nav aria-label="Page navigation">
                                 <ul class="pagination pagination-lg justify-content-center bg-white mb-0" style="padding: 30px;">
                                   <li class="page-item ">
-                                    <a class="page-link" href="blogD.php?pag=<?php echo($pag -1)?>" aria-label="Previous">
-                                      <span aria-hidden="true">&laquo;</span>
-                                      <span class="sr-only">Anterior</span>
-                                    </a>
-                                  </li>
-                                  <?php
-                                  if ($pag > 1) {
+
+                                    <?php if($pag <=1) { echo 
+                                        '<a class="page-link" disabled aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Anterior</span>
+                                        </a>';
+                                    } else { echo 
+                                        '<a class="page-link" href="blogD.php?pag= '. $pag -1 .'" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                            <span class="sr-only">Anterior</span>
+                                        </a>'; 
+                                    }?>
+
+
+                                    </li>
+
+                                    <?php
+                                    if ($pag > 1 ) {
                                         echo "<li class='page-item' ><a class='page-link' href='blogD.php?pag=" . ($pag - 1) . "'>" . ($pag - 1) . "</a></li>";
                                     }  
                                     
@@ -267,11 +281,19 @@ include("conexion.php");
                                         echo "<li class='page-item'><a class='page-link' href='blogD.php?pag=" . ($totalPaginas) . "'>" . ($totalPaginas) . "</a></li>";
                                     }
                                     ?>
+
                                   <li class="page-item" >
-                                    <a class="page-link" href="blogD.php?pag=<?php echo($pag +1)?>" aria-label="Next">
-                                      <span aria-hidden="true">&raquo;</span>
-                                      <span class="sr-only">Siguiente</span>
-                                    </a>
+                                    <?php if ($pag == $totalPaginas) { echo  
+                                        '<a class="page-link" disabled aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Siguiente</span>
+                                        </a>';
+                                    } else { echo 
+                                        '<a class="page-link" href="blogD.php?pag= '. $pag + 1 .'" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                            <span class="sr-only">Siguiente</span>
+                                        </a>';
+                                    } ?>
                                   </li>
                                 </ul>
                               </nav>
