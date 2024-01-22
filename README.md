@@ -1,4 +1,4 @@
 #ACCOUNTS
- <br> user: man pass: o
- <br> teacher: profe1 pass: o
- <br> admin: papitaloca@gmail.com pass: cara
+ <br> user: man password: o
+ <br> teacher: profe1 password: o
+ <br> admin: papitaloca@gmail.com password: cara
